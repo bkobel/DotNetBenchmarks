@@ -1,3 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
+using PartialVsLogger;
 
-BenchmarkRunner.Run<StringConcatenationBenchmark>();
+BenchmarkRunner.Run<LoggingBenchmark>();

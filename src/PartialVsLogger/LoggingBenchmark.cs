@@ -1,12 +1,14 @@
 using BenchmarkDotNet.Attributes;
 using Microsoft.Extensions.Logging;
 
-[MemoryDiagnoser]
-public class StringConcatenationBenchmark
-{
-    private const int ExecTimes = 1000 * 1000 * 100;
+namespace PartialVsLogger;
 
-    private static ILogger _logger = LoggerFactory.Create(builder => builder.AddDebug()).CreateLogger("Default");
+[MemoryDiagnoser]
+public class LoggingBenchmark
+{
+    private const int ExecTimes = 100 * 1000 * 1000;
+
+    private static readonly ILogger Logger = LoggerFactory.Create(builder => builder.AddDebug()).CreateLogger("Default");
     
     [Benchmark]
     public void LogSimple()
@@ -17,7 +19,7 @@ public class StringConcatenationBenchmark
             var address = 123123123L;
             var message = "Moving";
 
-            _logger.LogInformation("{Message} {Count} items from {Address}", message, count, address);
+            Logger.LogInformation("{Message} {Count} items from {Address}", message, count, address);
         }
     }
 
@@ -30,7 +32,7 @@ public class StringConcatenationBenchmark
             var address = 123123123L;
             var message = "Moving";
 
-            _logger.LogDelivery(message, count, address);
+            Logger.LogDelivery(message, count, address);
         }
     }
 }
