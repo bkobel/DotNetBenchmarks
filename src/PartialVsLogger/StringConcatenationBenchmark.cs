@@ -22,7 +22,7 @@ public class StringConcatenationBenchmark
     }
 
     [Benchmark]
-    public void ConcatWithStringBuilder()
+    public void LogViaPartialClass()
     {
         for (var i = 0; i < ExecTimes; i++)
         {
@@ -30,7 +30,7 @@ public class StringConcatenationBenchmark
             var address = 123123123L;
             var message = "Moving";
 
-            _logger.LogPeriodicWorkFailure(message, count, address);
+            _logger.LogDelivery(message, count, address);
         }
     }
 }
@@ -38,5 +38,5 @@ public class StringConcatenationBenchmark
 public static partial class ConsoleLogger
 {
     [LoggerMessage(LogLevel.Information, "{Message} {Count} items from {Address}")]
-    public static partial void LogPeriodicWorkFailure(this ILogger logger, string message, int count, long address);
+    public static partial void LogDelivery(this ILogger logger, string message, int count, long address);
 }
